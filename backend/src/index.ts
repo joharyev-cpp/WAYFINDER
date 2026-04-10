@@ -6,8 +6,10 @@ import compression from 'compression';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 
-import poisRouter from './routes/pois';
+import poisRouter    from './routes/pois';
 import beaconsRouter from './routes/beacons';
+import authRouter    from './routes/auth';
+import adminRouter   from './routes/admin';
 import { errorHandler } from './middleware/errorHandler';
 
 // Trigger DB init + schema creation on startup
@@ -36,6 +38,8 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'wayfinder-api', time: new Date().toISOString() });
 });
 
+app.use('/api/auth',    authRouter);
+app.use('/api/admin',   adminRouter);
 app.use('/api/pois',    poisRouter);
 app.use('/api/beacon',  beaconsRouter);
 

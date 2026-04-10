@@ -82,11 +82,21 @@ db.exec(`
     detected_at             TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS users (
+    id            TEXT PRIMARY KEY,
+    name          TEXT NOT NULL,
+    email         TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    role          TEXT NOT NULL DEFAULT 'operator' CHECK(role IN ('admin','operator')),
+    created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE INDEX IF NOT EXISTS idx_beacons_poi    ON beacons(poi_id);
   CREATE INDEX IF NOT EXISTS idx_content_poi    ON content_blocks(poi_id);
   CREATE INDEX IF NOT EXISTS idx_services_poi   ON nearby_services(poi_id);
   CREATE INDEX IF NOT EXISTS idx_events_beacon  ON detection_events(beacon_id);
   CREATE INDEX IF NOT EXISTS idx_events_time    ON detection_events(detected_at);
+  CREATE INDEX IF NOT EXISTS idx_users_email    ON users(email);
 `);
 
 export default db;
