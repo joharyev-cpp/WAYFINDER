@@ -8,7 +8,7 @@
 import type { BeaconContentResponse, POI, ApiResponse } from '../types';
 
 // Change this to your server URL in production
-const API_BASE_URL = process.env.API_BASE_URL ?? 'http://10.0.2.2:3000/api'; // 10.0.2.2 = Android emulator → host
+const API_BASE_URL = process.env.API_BASE_URL ?? 'http://10.0.2.2:3001/api'; // 10.0.2.2 = Android emulator → host
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
